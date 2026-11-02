@@ -1,6 +1,14 @@
 
 <?php
 require "./order_functions.php";
+
+$welcomeBack = '';
+if (isset($_COOKIE['lastVisit'])) {
+   $last = htmlspecialchars($_COOKIE['lastVisit']);
+   $welcomeBack = "Welcome back! Your last visit was {$last}.";
+} else {
+   $welcomeBack = 'First time at Chez Session? Welcome in!';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +20,8 @@ require "./order_functions.php";
 <body>
    <h1>Chez Session</h1>
    <h2>Build Your Order</h2>
+
+   <p class="welcome-note"><?= $welcomeBack ?></p>
 
    <form action="process_order.php" method="post">
       <div>

@@ -2,6 +2,11 @@
 <?php
 require "./order_functions.php";
 $orderSummary = order();
+
+// Runs at the very top of process_order.php, alongside session_start().
+// One day = 86400 seconds. One week = 604800.
+$visitStamp = date('l, F j, Y g:i a');
+setcookie('lastVisit', $visitStamp, time() + 86400, '/');
 ?>
 <!DOCTYPE html>
 <html lang="en">
