@@ -53,6 +53,33 @@ function completionMessage(): string {
    return "You have completed {$count} of 3 order choices.";
 }
 
+function pairingSuggestion(): string {
+   $dessert = sessionValue('dessert');
+   $drink = sessionValue('drink');
+
+   if ($dessert === '(not selected)' || $drink === '(not selected)') {
+      return 'Select both a dessert and a drink to see a suggested pairing.';
+   }
+
+   if ($dessert === 'Cheesecake' && $drink === 'Coffee') {
+      return 'Suggested pairing: Cheesecake and coffee create a classic cafe-style combo.';
+   }
+
+   if ($dessert === 'Chocolate Cake' && $drink === 'Milk') {
+      return 'Suggested pairing: Chocolate cake and milk make a rich and familiar dessert pairing.';
+   }
+
+   if ($dessert === 'Tiramisu' && $drink === 'Coffee') {
+      return 'Suggested pairing: Tiramisu and coffee reinforce the espresso flavor profile.';
+   }
+
+   if ($dessert === 'Carrot Cake' && $drink === 'Tea') {
+      return 'Suggested pairing: Carrot cake and tea create a lighter and balanced combination.';
+   }
+
+   return "Suggested pairing: {$dessert} with {$drink} gives the order a custom bistro feel.";
+}
+
 function dessertSelected($dessert): string {
    return ($_SESSION['dessert'] ?? '') === $dessert
       ? 'selected'
