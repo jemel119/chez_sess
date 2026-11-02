@@ -22,3 +22,21 @@ function order(): string {
       . "Drink: {$_SESSION['drink']}<br>"
       . "Drink size: {$_SESSION['drinkSize']}";
 }
+
+function dessertSelected($dessert): string {
+   return ($_SESSION['dessert'] ?? '') === $dessert
+      ? 'selected'
+      : '';
+}
+
+function drinkSelected($drink): string {
+   return ($_SESSION['drink'] ?? '') === $drink
+      ? 'selected'
+      : '';
+}
+
+function drinkSizeSelected($size): string {
+   return ($_SESSION['drinkSize'] ?? '') === $size
+      ? 'checked'
+      : '';
+}
