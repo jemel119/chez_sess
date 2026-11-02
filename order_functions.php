@@ -80,6 +80,80 @@ function pairingSuggestion(): string {
    return "Suggested pairing: {$dessert} with {$drink} gives the order a custom bistro feel.";
 }
 
+function dessertPrice(): float {
+   $prices = [
+      'Cheesecake' => 4.25,
+      'Chocolate Cake' => 4.5,
+      'Carrot Cake' => 4.0,
+      'Tiramisu' => 4.75,
+   ];
+
+   return $prices[sessionValue('dessert')] ?? 0.0;
+}
+
+function drinkPrice(): float {
+   $basePrices = [
+      'Coffee' => 2.25,
+      'Hot Chocolate' => 2.75,
+      'Root Beer' => 2.5,
+      'Tea' => 2.0,
+      'Milk' => 1.75,
+   ];
+
+   $sizeUpcharge = [
+      'Small' => 0.0,
+      'Medium' => 0.6,
+      'Large' => 1.15,
+   ];
+
+   $drink = sessionValue('drink');
+   $drinkSize = sessionValue('drinkSize');
+
+   if (!isset($basePrices[$drink])) {
+      return 0.0;
+   }
+
+   return $basePrices[$drink] + ($sizeUpcharge[$drinkSize] ?? 0.0);
+}
+
+function estimatedTotal(): float {
+   return dessertPrice() + drinkPrice();
+}
+
+function formattedTotal(): string {
+   return '$' . number_format(estimatedTotal(), 2);
+}
+
+function pricingNote(): string {
+   if (sessionValue('drink') !== '(not selected)' && sessionValue('drinkSize') === '(not selected)') {
+      return 'Choose a drink size to finalize the drink price.';
+   }
+
+   if (completedChoiceCount() === 0) {
+      return 'Your estimated total will update as soon as you begin building the order.';
+   }
+
+   return 'The estimate is based on the current dessert, drink, and drink size selections.';
+}
+
+function orderProfile(): string {
+   $total = estimatedTotal();
+
+   if ($total >= 6.5) {
+      return 'Full cafe combo';
+   }
+
+   if ($total >= 4.0) {
+      return 'Balanced dessert break';
+   }
+
+   if ($total > 0) {
+      return 'Light snack order';
+   }
+
+   return 'No selections yet';
+}
+
 function dessertSelected($dessert): string {
    return ($_SESSION['dessert'] ?? '') === $dessert
       ? 'selected'
