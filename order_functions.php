@@ -23,6 +23,36 @@ function order(): string {
       . "Drink size: {$_SESSION['drinkSize']}";
 }
 
+function sessionValue(string $key): string {
+   return $_SESSION[$key] ?? '(not selected)';
+}
+
+function completedChoiceCount(): int {
+   $count = 0;
+
+   foreach (['dessert', 'drink', 'drinkSize'] as $key) {
+      if (sessionValue($key) !== '(not selected)') {
+         $count++;
+      }
+   }
+
+   return $count;
+}
+
+function completionMessage(): string {
+   $count = completedChoiceCount();
+
+   if ($count === 3) {
+      return 'Your order is complete and ready to submit.';
+   }
+
+   if ($count === 0) {
+      return 'Start by choosing a dessert, a drink, and a size.';
+   }
+
+   return "You have completed {$count} of 3 order choices.";
+}
+
 function dessertSelected($dessert): string {
    return ($_SESSION['dessert'] ?? '') === $dessert
       ? 'selected'
