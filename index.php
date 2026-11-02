@@ -64,6 +64,24 @@ require "./order_functions.php";
       </p>
    </form>
 
+   <div class="insight-card">
+      <h3>Live Guidance</h3>
+      <p><?= htmlspecialchars(completionMessage()); ?></p>
+      <p class="insight-note"><?= htmlspecialchars(pairingSuggestion()); ?></p>
+   </div>
+
+   <div class="insight-card pricing-grid">
+      <div>
+         <h3>Estimated Total</h3>
+         <p class="price-figure"><?= htmlspecialchars(formattedTotal()); ?></p>
+      </div>
+
+      <div>
+         <h3>Order Profile</h3>
+         <p><?= htmlspecialchars(orderProfile()); ?></p>
+      </div>
+   </div>
+
    <p>
       <a href="forget_order.php">Forget Order</a>
    </p>
